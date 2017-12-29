@@ -1,0 +1,5 @@
+{
+    "require": {
+        "ghunti/highcharts-php": "~3.0"
+    }
+}
