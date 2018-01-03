@@ -129,10 +129,14 @@ while ($row = mysqli_fetch_assoc($data)) {
               $total = $totalTotal/1024;
               $average = ($totalTotal/$amountOfDays)/1024;
 
-              $daysLastMonth = (date("t", mktime(0,0,0, date("n") - 1)) % 22);
-              $totalBillableDays = $daysLastMonth + 22;
+              $dayNo = $days[sizeof($days)-1];
+              $daysTaken = $dayNo % 22;
+              $daysLeft = date('t') - $daysTaken;
 
-              $estimated = ($totalBillableDays*$average)+$total;
+              $daysLastMonth = (date("t", mktime(0,0,0, date("n") - 1)) % 22);
+              $totalBillableDaysLeft = ($daysLastMonth + 22)-($daysTaken+$daysLastMonth);
+
+              $estimated = ($totalBillableDaysLeft*$average)+$total;
               echo round($estimated, 2);
               ?>
       			</div>
