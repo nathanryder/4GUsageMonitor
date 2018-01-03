@@ -14,9 +14,27 @@ const con = mysql.createConnection({
 });
 
 var date = new Date();
-var day = date.getDate()
+var day = date.getDate();
 var month = date.getMonth() + 1;
-var year = date.getFullYear()
+var year = date.getFullYear();
+var dayNo = 0;
+
+if (day > 22) {
+  dayNo = day % 22;
+} else {
+  var fakeYear = year;
+  var fakeMonth = month-1;
+  if (fakeMonth == 0) {
+    month = 12;
+    fakeMonth = 12;
+    --fakeYear;
+    --year;
+  }
+
+  var fakeDate = new Date(fakeYear, fakeMonth, 0);
+  var last = fakeDate.getDate() % 22;
+  dayNo = last+day;
+}
 
 function getMainData(callback) {
     con.query('SELECT * FROM mainData', function(err, result) {
@@ -31,7 +49,7 @@ con.connect((err) => {
   if (err) throw err;
   console.log('Connected!');
 });
-con.query("CREATE TABLE IF NOT EXISTS `" + year + "_" + month + "`(day VARCHAR(20), upload VARCHAR(128), download VARCHAR(128), total VARCHAR(128))", (err,rows) => {
+con.query("CREATE TABLE IF NOT EXISTS `" + year + "_" + month + "`(dayNo VARCHAR(20), day VARCHAR(20), upload VARCHAR(128), download VARCHAR(128), total VARCHAR(128))", (err,rows) => {
   if(err) throw err;
 });
 con.query("CREATE TABLE IF NOT EXISTS mainData(upload VARCHAR(128), download VARCHAR(128), total VARCHAR(128))", (err,rows) => {
@@ -46,6 +64,7 @@ router.getToken(function(error, token) {
     var newUpload = ((response['TotalUpload']/1024)/1024);
     var newDownload = ((response['TotalDownload']/1024)/1024);
     var newTotal = newUpload+newDownload;
+    console.log(newTotal);
 
     var oldUpload = 0;
     var oldDownload = 0;
@@ -73,12 +92,14 @@ router.getToken(function(error, token) {
         var dayUpload = newUpload-oldUpload;
         var dayDownload = newDownload-oldDownload;
         var dayTotal = newTotal-oldTotal;
+        console.log(newTotal + " " + oldTotal);
+        console.log(dayTotal);
 
-        // console.log("        DAY VALUES");
-        // console.log(" ");
-        // console.log("Upload: " + dayUpload);
-        // console.log("Download: " + dayDownload);
-        // console.log("Total: " + dayTotal);
+        console.log("        DAY VALUES");
+        console.log(" ");
+        console.log("Upload: " + dayUpload);
+        console.log("Download: " + dayDownload);
+        console.log("Total: " + dayTotal);
 
 
         con.query("SELECT * FROM `"+year+"_"+month+"` WHERE day='" + day + "'", (err,rows) => {
@@ -89,7 +110,6 @@ router.getToken(function(error, token) {
               var addDownload = parseInt(rows[0]['download']);
               var addTotal = parseInt(rows[0]['total']);
 
-              console.log(dayUpload + " > " + addUpload + "?");
               if (dayUpload > addUpload) {
                 dayUpload = dayUpload+(dayUpload-addUpload);
                 dayDownload = dayDownload+(dayDownload-addDownload);
@@ -106,13 +126,13 @@ router.getToken(function(error, token) {
             }
 
             setTimeout(function() {
-              con.query("INSERT INTO `"+year+"_"+month+"` (day,upload,download,total) VALUES ('"+day+"', '"+dayUpload+"', '"+dayDownload+"', '"+dayTotal+"')", (err,rows) => {
+              con.query("INSERT INTO `"+year+"_"+month+"` (dayNo,day,upload,download,total) VALUES ('"+dayNo+"', '"+day+"', '"+dayUpload+"', '"+dayDownload+"', '"+dayTotal+"')", (err,rows) => {
                   if(err) throw err;
               });
-            }, 400);
+            }, 500);
 
           });
-    }, 200);
+    }, 500);
   });
 });
 
