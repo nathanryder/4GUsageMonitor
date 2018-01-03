@@ -127,19 +127,13 @@ while ($row = mysqli_fetch_assoc($data)) {
       			<div class="statcontainer">
       				<?php
               $total = $totalTotal/1024;
-
               $average = ($totalTotal/$amountOfDays)/1024;
-              $dayNo = $days[sizeof($days)-1];
-              $usageSoFar = round($totalTotal/1024,2);
-              $daysLeftInMonth = date('t') - $dayNo;
 
-              $daysTaken = $dayNo % 22;
-              $daysLeft = date('t') - $daysTaken;
-              $totalBillableDays = $daysLeft+$daysTaken;
+              $daysLastMonth = (date("t", mktime(0,0,0, date("n") - 1)) % 22);
+              $totalBillableDays = $daysLastMonth + 22;
 
-              $estimated = ($daysLeft*$average)+$total;
+              $estimated = ($totalBillableDays*$average)+$total;
               echo round($estimated, 2);
-
               ?>
       			</div>
       		</div>
