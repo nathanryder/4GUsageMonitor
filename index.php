@@ -16,7 +16,7 @@
       $data = mysqli_query($con, "SHOW TABLES");
       while ($row = mysqli_fetch_assoc($data)) {
         $name = $row['Tables_in_4GUsage'];
-        if ($name == "mainData")
+        if ($name == "mainData" || $name == "faults")
           continue;
 
         $full = explode("_", $name);
