@@ -1,5 +1,4 @@
 <?php
-
 if (!isset($_GET['year']) || !isset($_GET['month'])) {
   die("Year or month not given!");
 }
@@ -100,8 +99,9 @@ while ($row = mysqli_fetch_assoc($data)) {
     <title>Data usage for <?php echo $monthName; ?></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script></head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="includes/styles.css">
   <body>
-
+    <?php include("includes/navbar.php") ?>
     <style media="screen">
       .clear {
         clear:both;
