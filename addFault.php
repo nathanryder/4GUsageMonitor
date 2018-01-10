@@ -20,14 +20,14 @@
         $startTime = $_POST['startTime'];
         $endDate = $_POST['endDate'];
         $endTime = $_POST['endTime'];
-        $ongoing = isset($_POST['ongoing']) ? TRUE : FALSE;
+        $ongoing = isset($_POST['ongoing']) ? 1 : 0;
         $desc = $_POST['desc'];
 
         $query = "INSERT INTO faults (startDate,startTime,endDate,endTime,description,ongoing)
                     VALUES ('$startDate', '$startTime', '$endDate', '$endTime', '$desc', '$ongoing')";
 
-        if (mysqli_query($con, $query) === FALSE) {
-          echo '<center><div class="alert alert-danger" role="alert">Error: Failed to add fault<br>'+mysqli_error($con)+'</div></center>';
+	if (mysqli_query($con, $query) === FALSE) {
+          echo '<center><div class="alert alert-danger" role="alert">Error: Failed to add fault<br>'.mysqli_error($con).'</div></center>';
         } else {
           echo '<center><div class="alert alert-success" role="alert">Successfully added fault</div></center>';
         }
