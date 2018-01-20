@@ -84,9 +84,14 @@ while ($row = mysqli_fetch_assoc($data)) {
   else if ($dayName == "Sun")
     $sun = $sun + $total;
 
-  $uploadTotal = $uploadTotal+$upload;
-  $downloadTotal = $downloadTotal+$download;
-  $totalTotal = $totalTotal+$total;
+$data = mysqli_query($con, "SELECT * FROM mainData");
+while ($row = mysqli_fetch_assoc($data)) {
+  $uploadTotal = $row['upload'];
+  $downloadTotal = $row['download'];
+  $totalTotal = $row['total'];
+}
+
+
   ++$amountOfDays;
   array_push($days, $row['day']);
   array_push($daysUsage, round($total/1024,2));
