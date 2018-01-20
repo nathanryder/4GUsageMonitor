@@ -87,7 +87,6 @@ while ($row = mysqli_fetch_assoc($data)) {
   $uploadTotal = $uploadTotal+$upload;
   $downloadTotal = $downloadTotal+$download;
   $totalTotal = $totalTotal+$total;
-  echo "1: " . $totalTotal;
   ++$amountOfDays;
   array_push($days, $row['day']);
   array_push($daysUsage, round($total/1024,2));
@@ -128,8 +127,6 @@ while ($row = mysqli_fetch_assoc($data)) {
       			<div class="statcontainer">
       				<?php
               $total = $totalTotal/1024;
-              echo "<br>2: " . $totalTotal;
-              echo "<br>3: " . $total;
               $average = ($totalTotal/$amountOfDays)/1024;
 
               $dayNo = $days[sizeof($days)-1];
@@ -165,14 +162,20 @@ while ($row = mysqli_fetch_assoc($data)) {
 
            $data = mysqli_query($con, "SELECT * FROM `".$year."_".$month."`");
            while ($row = mysqli_fetch_assoc($data)) {
+             if ($row['day'] <= 22) {
+               if ($month == 12) {
+                 $month = 1;
+               } else {
+                 $month--;
+               }
+             }
+
              $date = $row['day'] . "-" . $month . "-" . $year;
              $dayName = date('D', strtotime($date));
              $upload = $row['upload'];
              $download = $row['download'];
              $total = $row['total'];
              $roundedTotal = round($total/1024, 2);
-             echo "<br>4: " . $total;
-             echo "<br>4: " . $roundedTotal;
 
              echo "<tr>";
              echo "<td>" . $row['day'] . "</td>";
