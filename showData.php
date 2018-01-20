@@ -166,7 +166,7 @@ while ($row = mysqli_fetch_assoc($data)) {
              if ($row['day'] <= 22) {
                if ($month == 12) {
                  $month = 01;
-                 $year--;
+                 $year++;
                } else {
                  $month--;
                }
