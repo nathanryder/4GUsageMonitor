@@ -130,7 +130,6 @@ router.getToken(function(error, token) {
                   if(err) throw err;
               });
             }, 500);
-
           });
     }, 500);
   });
