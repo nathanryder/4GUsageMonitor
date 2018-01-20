@@ -167,8 +167,6 @@ while ($row = mysqli_fetch_assoc($data)) {
                if ($month == 12) {
                  $month = 01;
                  $year++;
-               } else {
-                 $month--;
                }
              }
              echo "<br>Date 2: " . $row['day'] . "-" . $month . "-" . $year . "<br>";
