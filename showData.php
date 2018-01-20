@@ -60,6 +60,13 @@ $sun = 0;
 
 $data = mysqli_query($con, "SELECT * FROM `".$year."_".$month."`");
 while ($row = mysqli_fetch_assoc($data)) {
+  if ($row['day'] <= 22) {
+    if ($month == 12) {
+      $month = 01;
+      $year++;
+    }
+  }
+
   $date = $row['day'] . "-" . $month . "-" . $year;
   $dayName = date('D', strtotime($date));
   $upload = $row['upload'];
@@ -162,14 +169,14 @@ while ($row = mysqli_fetch_assoc($data)) {
 
            $data = mysqli_query($con, "SELECT * FROM `".$year."_".$month."`");
            while ($row = mysqli_fetch_assoc($data)) {
-             echo "<br>Date 1: " . $row['day'] . "-" . $month . "-" . $year;
+             echo "";
              if ($row['day'] <= 22) {
                if ($month == 12) {
                  $month = 01;
                  $year++;
                }
              }
-             echo "<br>Date 2: " . $row['day'] . "-" . $month . "-" . $year . "<br>";
+             echo "";
 
              $date = $row['day'] . "-" . $month . "-" . $year;
              $dayName = date('D', strtotime($date));
