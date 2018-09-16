@@ -1,5 +1,5 @@
 # 4GUsageMonitor
-This is a website for tracking daily and monthly usage on my router, as well as allowing for alerts based on the usage and for the logging of faults.
+This is a website for tracking daily and monthly usage on my router, as well as allowing for alerts based on the usage and for the logging of faults. Created using the API found here for Huawei routers: https://github.com/ishan-marikar/dialog-router-api
 
 ## Screenshots
 Main landing page:
